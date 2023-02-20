@@ -1,0 +1,13 @@
+1- Download MatPlotLib: pip3 install matplotlib
+2- Download PyQT5: pip3 install pyqt5
+
+commands:
+
+	./src/dctl.py list
+	./src/dctl.py push 10
+	./src/dctl.py pop
+
+	./render
+
+
+Commands Are Self-Describing Though.

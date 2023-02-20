@@ -1,0 +1,57 @@
+#!/bin/python3
+
+'''
+  Developed By Mahmoud Osman
+  This Software Will Predict Your Salary Based On Daily Income
+  You Need To Feed This Model Daily in Order To Get Higher Accuracy
+
+  Thank You Very Much <3, All The Respect
+  Documentation:
+'''
+
+import json
+import calendar
+import datetime
+import matplotlib.pyplot as plt
+
+# Initialize
+today=datetime.datetime.now()
+month_n=calendar.monthrange(today.year, today.month)[1]
+figure, axis = plt.subplots()
+
+axis.set_xlim([1, month_n])
+
+# Get Required Data
+with open("feeds/data.json", "r") as feed:
+    data=feed.read()
+    feed.close()
+
+# Convert And Get The Average
+data=json.loads(data)
+data_avg=0
+salary_avg=[]
+
+
+data_avg=int(data[-1])
+data_avg=data_avg/today.day
+
+salary_avg.append(0)
+for average in range(1, month_n-1):
+    salary_avg.append(salary_avg[average-1]+data_avg)
+
+axis.set_ylim([0, 20])
+
+x = [ day for day in range(1, month_n) ]
+y = data
+z = salary_avg
+
+plt.plot(x[:len(y)], y, label="Your Daily Earning")
+plt.plot(x, z, label="Estimated Salary")
+
+plt.xlabel('Timeframe: 1 Day')
+plt.ylabel('Salary in USD')
+plt.title('Predict Your Salary')
+plt.yticks([0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200], [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200])
+plt.xticks(x, x)
+plt.legend(loc="upper right")
+plt.show()
